@@ -1,0 +1,22 @@
+{
+    "contents" : "",
+    "created" : 1424337903813.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C3FA86DB",
+    "lastKnownWriteTime" : 30962681229869057,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "caption" : "test",
+        "contentUrl" : "content?title=test&file=60589945c27c416485459017929b5077.htm",
+        "displayedObservations" : 1000,
+        "displayedVariables" : 40,
+        "totalObservations" : 1000,
+        "variables" : 40
+    },
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}
