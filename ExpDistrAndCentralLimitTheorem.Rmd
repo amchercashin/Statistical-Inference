@@ -1,18 +1,18 @@
 ---
-title: "Statistical Inference Course Project"
+title: "Statistical Inference Course Project part 1"
 author: "Alexandr Cherkashin"
 date: "Thursday, February 19, 2015"
-output: html_document
+output: pdf_document
 ---
 
 ##Synopsis
-In this project we will investigate the exponential distribution in R and compare it with the Central Limit Theorem. We will show that distributions of random samples means and variances taken from exponential distribution are approximately normal. We wil find how calculated mean and variance of this distribution similar to theoretical mean and variance. 
+In this project we will investigate the exponential distribution in R and compare it with the Central Limit Theorem. We wil find how calculated mean and variance of this distribution similar to theoretical mean and variance. We will show that distribution of random samples means taken from exponential distribution is approximately normal.
 
 ##Simulation
-Let's make take our samples from exponential distribution and calculate there means.
+Let's make our samples from exponential distribution and calculate the means.
 
-In the code below  first we'll make a matrix with 1000 rows anf 40 columns filled with generated random values from exponential distribution. Each row will represent a sample, thus sample sizes is 40 values. We'll store this data in 'samples' variable.
-Next we'll calculate mean value for each row by applying the function "mean" to each row of the matrix. We'll store all 1000 mean in "sample.means" variable. This will be the sample means distribution.
+In the code below  first we'll make a matrix with 1000 rows anf 40 columns filled with generated random values from exponential distribution. Each row will represent a sample, thus sample sizes is 40 values. We'll store this data in `samples` variable.
+Next we'll calculate mean value for each row by `apply`ing the function `mean` to each row of the matrix. We'll store all 1000 mean in `sample.means` variable. This will be the sample means distribution.
 ```{r}
 set.seed(42)
 samples <- matrix(rexp(n = 40 * 1000, rate = 0.2), ncol = 40)
@@ -21,7 +21,7 @@ sample.means <- apply(samples, 1, "mean")
 ##Basic inferential data analysis
 ###Sample Mean versus Theoretical Mean
 The theoretical mean of random samples from any distribution should be close to the mean of the original distribution.
-Let's look at theoretical and calculated samples mean. The theoretical mean would be '1 / labda' of exponentian distribution, and in this project lambda is equal to 0.2.
+Let's look at theoretical and calculated actual samples mean. The theoretical mean would be `1 / labda` of exponentian distribution, and in this project lambda is equal to `0.2`.
 ```{r}
 #Theoretical mean is:
 1 / 0.2
@@ -33,9 +33,9 @@ mean(sample.means)
 The values are very close. The sample mean is estimating population mean.
 
 ###Sample Variance versus Theoretical Variance
-The variance of our exponential distribution equals '1 / lambda^2'.
-The theoretical variance of sample means should be equal to '(1 / lambda^2) / n', where and n is the size of samples.
-Let's compare theretical variance and calculated on actual samples from 'sample.means'.
+The variance of our exponential distribution equals `(1 / lambda)^2`.
+The theoretical variance of sample means should be equal to `(1 / lambda)^2 / n`, where and n is the size of samples.
+Let's compare theoretical variance and calculated on actual samples from `sample.means`.
 ```{r}
 #Theoretical sample variance is:
 (1/0.2^2)/40
@@ -54,30 +54,21 @@ hist(sample.means)
 
 #Normal distribution placed over
 set.seed(42)
-x <- seq(1, 8, length = 1000)
-y <- dnorm(x, mean = mean(sample.means), sd = sd(sample.means))
-lines(x = , y = dnorm(norm.distr))
+curve(dnorm(x, mean = mean(sample.means), sd = sd(sample.means))*500, add = TRUE, yaxt = "n", lwd=2)
 
 ```
+Sample means distribution looks a lot like normal distribution.
 
-
-
-var(sampl)
-hist(sample.means)
-abline(v = mean(sample.means), col = "red")
-text(mean(sample.means), 150, round(mean(sample.means),2), pos = 4)
-```
-
-The mean and variance of this population are:
+About 68% of `sample.means` values lies withing one standart deviation above and below the mean.
+About 95% of `sample.means` values lies withing two standart deviation above and below the mean.
 ```{r}
-round(mean(sample.means),2)
-round(var(sample.means),2)
-```
-The mean of this population is **`r round(mean(population),2)`**.
-The variance
+length(sample.means[sample.means > (mean(sample.means) - sd(sample.means)) &
+                    sample.means < (mean(sample.means) + sd(sample.means))]) /
+                    length(sample.means)   
 
-```{r, echo=FALSE}
-plot(cars)
+length(sample.means[sample.means > (mean(sample.means) - 2 * sd(sample.means)) &
+                    sample.means < (mean(sample.means) + 2 * sd(sample.means))]) /
+                    length(sample.means)   
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Defenately this distribution is close to noramal.
